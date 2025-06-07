@@ -41,8 +41,8 @@ if not GOOGLE_API_KEY:
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
-# Modelo Gemini para OCR
-GEMINI_OCR_MODEL = "gemini-pro-vision" # o "gemini-1.5-flash-latest" si prefieres y está disponible
+# Configuración de modelos
+GEMINI_OCR_MODEL = "gemini-2.5-flash-preview-05-20"
 
 # ---------- helpers ---------- #
 def z(n:int, total:int)->str:
@@ -157,9 +157,19 @@ def main():
                     help="Resolución DPI para la conversión a JPG (por defecto %(default)s)")
     args = ap.parse_args()
 
-    pdf_path = Path(args.input_dir) / args.pdf
-    if not pdf_path.is_file():
-        print(f"Error: El archivo PDF {pdf_path} no existe.")
+    # Lógica mejorada para determinar la ruta del PDF
+    pdf_path_direct = Path(args.pdf)
+    pdf_path_in_input_dir = Path(args.input_dir) / args.pdf
+
+    if pdf_path_direct.is_file():
+        pdf_path = pdf_path_direct
+        print(f"INFO: Usando ruta directa para el PDF: {pdf_path}")
+    elif pdf_path_in_input_dir.is_file():
+        pdf_path = pdf_path_in_input_dir
+        print(f"INFO: Usando PDF desde input_dir: {pdf_path}")
+    else:
+        print(f"Error: El archivo PDF '{args.pdf}' no se encontró como ruta directa ni dentro del directorio '{args.input_dir}'.")
+        print(f"Probadas: '{pdf_path_direct.resolve()}' y '{pdf_path_in_input_dir.resolve()}'")
         return
 
     out_dir = Path(args.output_dir)
