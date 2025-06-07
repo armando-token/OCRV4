@@ -43,14 +43,38 @@ Sigue estas reglas **exactas** (¡no improvises nada!):
 Devuélveme únicamente el bloque Markdown listo para pegar.
 """
 
-# Configuración de clientes
+# Configuración de claves API
+# Intentar cargar desde variables de entorno primero, luego desde config_local.py
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
+if not OPENAI_API_KEY or not GOOGLE_API_KEY:
+    try:
+        import config_local
+        if not OPENAI_API_KEY and hasattr(config_local, 'OPENAI_API_KEY'):
+            OPENAI_API_KEY = config_local.OPENAI_API_KEY
+            if OPENAI_API_KEY:
+                 print("INFO: OPENAI_API_KEY cargada desde config_local.py")
+            else:
+                print("Advertencia: OPENAI_API_KEY está vacía en config_local.py.")
+        
+        if not GOOGLE_API_KEY and hasattr(config_local, 'GOOGLE_API_KEY'):
+            GOOGLE_API_KEY = config_local.GOOGLE_API_KEY
+            if GOOGLE_API_KEY:
+                print("INFO: GOOGLE_API_KEY cargada desde config_local.py")
+            else:
+                print("Advertencia: GOOGLE_API_KEY está vacía en config_local.py.")
+
+    except ImportError:
+        print("Advertencia: config_local.py no encontrado. Las claves API deben estar como variables de entorno o en config_local.py.")
+    except AttributeError as e:
+        print(f"Advertencia: Atributo de clave API no encontrado en config_local.py: {e}")
+
+
 if not OPENAI_API_KEY:
-    raise ValueError("La variable de entorno OPENAI_API_KEY no está configurada.")
+    raise ValueError("La OPENAI_API_KEY no está configurada como variable de entorno ni encontrada en config_local.py.")
 if not GOOGLE_API_KEY:
-    raise ValueError("La variable de entorno GOOGLE_API_KEY no está configurada.")
+    raise ValueError("La GOOGLE_API_KEY no está configurada como variable de entorno ni encontrada en config_local.py.")
 
 client_openai = OpenAI(api_key=OPENAI_API_KEY)
 genai.configure(api_key=GOOGLE_API_KEY)

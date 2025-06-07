@@ -1,0 +1,28 @@
+# Archivos de configuración local (NO SUBIR A GIT)
+config_local.py
+
+# Directorios de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Entornos virtuales
+venv/
+ENV/
+.env
+.venv
+
+# Directorios temporales del script
+pages_temp/
+images_temp/
+
+# Archivos específicos del OS
+.DS_Store
+Thumbs.db
+
+# Archivos de salida (opcional, si no quieres versionarlos)
+# Output_files/
+
+# Otros
+.idea/
+*.log 
