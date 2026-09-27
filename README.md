@@ -61,8 +61,8 @@ choco install poppler
 
 ### Step 1: Clone & Install Requirements
 ```bash
-git clone https://github.com/armandosilva/ocrv4.git
-cd ocrv4
+git clone https://github.com/armando-token/OCRV4.git
+cd OCRV4
 pip install -r requirements.txt
 ```
 
