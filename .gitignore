@@ -1,28 +1,55 @@
-# Archivos de configuración local (NO SUBIR A GIT)
+# Environment variables & secrets
+.env*
+!.env.example
 config_local.py
 
-# Directorios de Python
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Entornos virtuales
+# Virtual Environments
 venv/
+.venv/
 ENV/
-.env
-.venv
+env/
 
-# Directorios temporales del script
+# Temporary processing directories
 pages_temp/
 images_temp/
 
-# Archivos específicos del OS
+# Operating System files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
 
-# Archivos de salida (opcional, si no quieres versionarlos)
-# Output_files/
-
-# Otros
+# IDE & Editor files
 .idea/
-*.log 
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
